@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "lib.h"
+#include <string.h>
+#include "../strings/strings.h"
+#include "../pointers/pointers.h"
 
 /*
     Duplicates the input string by dynamically allocating memory for 
@@ -12,7 +15,10 @@
 */
 char *string_dup(char *src)
 {
-
+    int len = string_length(src);
+    char *ptr = malloc((len+1)*sizeof(char));
+    strcpy(ptr, src);
+    return ptr;
 }
 
 /*
@@ -24,7 +30,10 @@ char *string_dup(char *src)
 */
 void mem_copy(void *dest, const void *src, int n)
 {
-
+    char *d = (char *) dest;
+    char *s = (char *) src;
+    int n2 = n*sizeof(*src)/sizeof(*s);
+    for(int i = 0; i <=n2; i++) *(d+i) = *(s+i);
 }
 
 /*
@@ -40,7 +49,11 @@ void mem_copy(void *dest, const void *src, int n)
 */
 void *resize_memory(void *ptr, int old_size, int new_size)
 {
-
+    if(old_size==new_size)return ptr;
+    char *dest = (char *) malloc(new_size);
+    mem_copy(dest, ptr, old_size);
+    free(ptr);
+    return dest;
 }
 
 #ifndef TESTING
