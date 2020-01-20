@@ -41,6 +41,7 @@ Person *createPerson(char *name, int age, int height, int weight)
 void destroyPerson(Person *who)
 {
     if(who->name!=NULL)free(who->name);
+    //don't try to free thing which weren't malloc'ed.
     if(who!=NULL)free(who);
 }
 
