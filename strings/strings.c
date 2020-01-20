@@ -49,8 +49,8 @@ int main(void)
 
     printf("The string 'Don't forget to be awesome' has %d characters.\n", string_length(quote1));
     printf("The string 'a man a plan a canal panama' reversed is: '%s'\n", reverse_string(rv, quote2));
-    printf("The length of the reversed string is: %d\n", string_length(reverse_string(rv,quote2)));
-    printf("The length of the reversed string is: %d\n", strlen(reverse_string(rv,quote3)));
+    printf("The length of the reversed string is: %d\n", string_length(reverse_string(rv,quote1)));
+    printf("The length of the reversed string is: %d\n", strlen(reverse_string(rv,quote1)));
 
     return 0;
 }
