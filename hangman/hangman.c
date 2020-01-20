@@ -3,6 +3,7 @@
 #include <string.h>
 int strikes = 0;
 char *word;
+char *guessed;
 char HANG_STATES[7][10 * 9] =
 	{
 		"             +         +----     +----     +----     +----     +----     +----     +----  ",
@@ -14,8 +15,7 @@ char HANG_STATES[7][10 * 9] =
 		"/*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   "};
 void display_hang(int strikes)
 {
-	int end_idx = (strikes+1)*10;
-	int i;
+	int i, end_idx = (strikes + 1) * 10;
 	for (int j = 0; j < 7; j++)
 	{
 		for (i = strikes * 10; i < end_idx; i++)
@@ -23,13 +23,22 @@ void display_hang(int strikes)
 		printf("\n");
 	}
 }
+void init(char *in_word)
+{
+	word = (char *)malloc(sizeof(*in_word));
+	guessed = (char *)malloc(sizeof(*in_word));
+	strcpy(word, in_word);
+	int i;
+	for (i = 0; i < strlen(word); i++)
+		guessed[i] = '_';
+	guessed[i] = '\0';
+}
 int main(int argc, char *argv[])
 {
-	word = (char *) malloc(sizeof(*argv[1]));
-	strcpy(word,argv[1]);
+	init(argv[1]);
 	while (1)
 	{
-		printf("%s\n",word);
+		printf("%s\n", guessed);
 		scanf("%d", &strikes);
 		display_hang(strikes);
 		if (strikes == 8)
