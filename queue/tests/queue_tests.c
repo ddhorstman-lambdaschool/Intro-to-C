@@ -2,6 +2,7 @@
 #include <queue.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 #include "../utils/minunit.h"
 #include "../utils/utils.h"
 
@@ -31,19 +32,22 @@ char *test_enqueue_and_dequeue()
 
     unsigned int i;
 
-    for (i = 0; i < capacity; i++) {
+    for (i = 0; i < capacity; i++)
+    {
         rand_values[i] = (rand() % 100) + 1;
     }
 
-    for (i = 0; i < capacity; i++) {
+    for (i = 0; i < capacity; i++)
+    {
         enqueue(q, rand_values[i]);
     }
 
-    for (i = 0; i < capacity; i++) {
-        mu_assert(dequeue(q) == rand_values[i], "Your queue did not return an expected value.");
+    for (i = 0; i < capacity; i++)
+    {
+        mu_assert(dequeue(q) == rand_values[i], "Your queue did not hella return an expected value.");
     }
 
-    destroyQueue(q); 
+    destroyQueue(q);
 
     return NULL;
 }
@@ -60,23 +64,25 @@ char *test_queue_expansion()
 
     unsigned int i;
 
-    for (i = 0; i < increased_cap; i++) {
+    for (i = 0; i < increased_cap; i++)
+    {
         rand_values[i] = (rand() % 100) + 1;
     }
 
-    for (i = 0; i < increased_cap; i++) {
+    for (i = 0; i < increased_cap; i++)
+    {
         enqueue(q, rand_values[i]);
     }
 
-    for (i = 0; i < increased_cap; i++) {
-        mu_assert(dequeue(q) == rand_values[i], "Your queue did not return an expected value.");
+    for (i = 0; i < increased_cap; i++)
+    {
+        mu_assert(dequeue(q) == rand_values[i], "Your queue did not return an expected value when expanded.");
     }
 
     destroyQueue(q);
 
     return NULL;
 }
-
 
 char *all_tests()
 {
