@@ -28,9 +28,12 @@ void init(char *in_word)
 	word = (char *)malloc(sizeof(*in_word));
 	guessed = (char *)malloc(sizeof(*in_word));
 	strcpy(word, in_word);
-	int i;
-	for (i = 0; i < strlen(word); i++)
+	int i, max = strlen(word);
+	//it's necessary to store strlen in an int rather than use it directly
+	//in the for loop
+	for (i = 0; i < max; i++){
 		guessed[i] = '_';
+	}
 	guessed[i] = '\0';
 }
 int main(int argc, char *argv[])
@@ -45,5 +48,6 @@ int main(int argc, char *argv[])
 			break;
 	}
 	free(word);
+	free(guessed);
 	return 0;
 }
