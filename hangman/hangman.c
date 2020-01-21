@@ -94,6 +94,10 @@ int main(int argc, char *argv[])
 	char guess[50];
 	int guess_status;
 
+	if (!argv[1]){
+		printf("Usage: ./hangman word_to_guess\n");
+		return 1;
+	}
 	init(argv[1]);
 
 	while (1)
