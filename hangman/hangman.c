@@ -15,6 +15,7 @@ char HANG_STATES[7][10 * 9] =
 		"/*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   "};
 void display_hang(int strikes)
 {
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	int i, end_idx = (strikes + 1) * 10;
 	for (int j = 0; j < 7; j++)
 	{
@@ -33,26 +34,28 @@ void init(char *in_word)
 	memset(guessed, '_', len);
 	*(guessed + len) = '\0';
 }
-int chkguess(char *g)
+int chkguess(char *guess)
 {
+	char g = guess[0];
 	int correct = 0;
 	for (int i = 0; i < strlen(word); i++)
-		if (g[0] == word[i])
+		if (g == word[i])
 		{
 			correct = 1;
-			guessed[i] = g[0];
+			guessed[i] = g;
 		}
 	return correct;
 }
 int main(int argc, char *argv[])
 {
-	char g[50];
+	char guess[50];
 	init(argv[1]);
 	while (1)
 	{
 		printf("Your word: %s\n", guessed);
-		scanf("%s", &g);
-		strikes += !chkguess(g);
+		printf("Make a guess: ");
+		scanf("%s", &guess);
+		strikes += !chkguess(guess);
 		display_hang(strikes);
 		if (strikes == 8)
 			break;
