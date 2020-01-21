@@ -58,6 +58,7 @@ int chkguess(char *guess)
 		}
 	if(strstr(guessed, word))
 		return -1;
+		
 	return correct;
 }
 void end_game(int outcome)
