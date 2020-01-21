@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 int strikes = 0;
-char *word, *guessed;
+char *word, *guessed, *wrong_guesses;
 char HANG_STATES[7][10 * 9] =
 	{
 		"             +         +----     +----     +----     +----     +----     +----     +----  ",
@@ -44,6 +44,9 @@ void init(char *in_word)
 	memset(guessed, '_', len);
 	*(guessed + len) = '\0';
 
+	wrong_guesses = (char *)malloc(26);
+	memset(wrong_guesses, ' ', 26);
+	*(wrong_guesses + 26) = '\0';
 	lower(word);
 	lower(guessed);
 }
@@ -60,13 +63,14 @@ int chkguess(char *guess)
 	for (int i = 0; i < strlen(word); i++)
 		if (g == word[i])
 		{
-			correct++;
+			correct = 1;
 			guessed[i] = g;
 		}
 
 	if (strstr(guessed, word))
 		return -1;
-
+	if (!correct)
+		wrong_guesses[strikes * 2] = g;
 	return correct;
 }
 
@@ -80,11 +84,12 @@ void end(int outcome)
 	if (outcome == 1)
 	{
 		display_hang(strikes);
-		printf("You win!\nYour word: %s\n\n", word);
+		printf("You win!\nYour word was %s\n\n", word);
 	}
 
 	free(word);
 	free(guessed);
+	free(wrong_guesses);
 }
 
 int main(int argc, char *argv[])
@@ -98,6 +103,7 @@ int main(int argc, char *argv[])
 	{
 		display_hang(strikes);
 		printf("Your word: %s\n", guessed);
+		printf("Doesn't contain: %s\n", wrong_guesses);
 		printf("Make a guess: ");
 		scanf("%s", &guess);
 		guess_status = chkguess(guess);
