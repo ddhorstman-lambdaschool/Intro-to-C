@@ -33,14 +33,27 @@ void init(char *in_word)
 	memset(guessed, '_', len);
 	*(guessed + len) = '\0';
 }
+int chkguess(char *g)
+{
+	int correct = 0;
+	for (int i = 0; i < strlen(word); i++)
+		if (g[0] == word[i])
+		{
+			correct = 1;
+			guessed[i] = g[0];
+		}
+	return correct;
+}
 int main(int argc, char *argv[])
 {
+	char g[50];
 	init(argv[1]);
 	while (1)
 	{
-		printf("%s\n", word);
-		printf("%s\n", guessed);
-		scanf("%d", &strikes);
+		printf("Your word: %s\n", guessed);
+		scanf("%s", &g);
+		strikes += !chkguess(g);
+		//scanf("%c", &g);
 		display_hang(strikes);
 		if (strikes == 8)
 			break;
