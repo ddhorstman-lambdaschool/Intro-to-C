@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 int strikes = 0;
-char *word;
-char *guessed;
+char *word, *guessed;
 char HANG_STATES[7][10 * 9] =
 	{
 		"             +         +----     +----     +----     +----     +----     +----     +----  ",
@@ -14,6 +14,7 @@ char HANG_STATES[7][10 * 9] =
 		"             |         |         |         |         |         |         |  /      |  / \\ ",
 		"             |         |         |         |         |         |         |         |      ",
 		"/*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   "};
+
 void display_hang(int strikes)
 {
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -25,26 +26,32 @@ void display_hang(int strikes)
 		printf("\n");
 	}
 }
+
 void lower(char *str)
 {
 	for (int i = 0; str[i]; i++)
 		str[i] = tolower(str[i]);
 }
+
 void init(char *in_word)
 {
 	int len = strlen(in_word);
 	word = (char *)malloc(len + 1);
-	guessed = (char *)malloc(len + 1);
 	memset(word, '\0', len + 1);
 	strcpy(word, in_word);
+
+	guessed = (char *)malloc(len + 1);
 	memset(guessed, '_', len);
 	*(guessed + len) = '\0';
+
 	lower(word);
 	lower(guessed);
 }
+
 int chkguess(char *guess)
 {
 	lower(guess);
+
 	if (strstr(guess, word))
 		return -1;
 
@@ -56,12 +63,14 @@ int chkguess(char *guess)
 			correct++;
 			guessed[i] = g;
 		}
-	if(strstr(guessed, word))
+
+	if (strstr(guessed, word))
 		return -1;
-		
+
 	return correct;
 }
-void end_game(int outcome)
+
+void end(int outcome)
 {
 	if (outcome == 0)
 	{
@@ -73,14 +82,18 @@ void end_game(int outcome)
 		display_hang(strikes);
 		printf("You win!\nYour word: %s\n\n", word);
 	}
+
 	free(word);
 	free(guessed);
 }
+
 int main(int argc, char *argv[])
 {
 	char guess[50];
-	init(argv[1]);
 	int guess_status;
+
+	init(argv[1]);
+
 	while (1)
 	{
 		display_hang(strikes);
@@ -90,14 +103,17 @@ int main(int argc, char *argv[])
 		guess_status = chkguess(guess);
 		if (guess_status == -1)
 		{
-			end_game(1);
+			end(1);
 			break;
 		}
 		else if (guess_status == 0)
+		{
 			strikes++;
+		}
+
 		if (strikes == 8)
 		{
-			end_game(0);
+			end(0);
 			break;
 		}
 	}
