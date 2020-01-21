@@ -51,12 +51,12 @@ int main(int argc, char *argv[])
 	char guess[50];
 	init(argv[1]);
 	while (1)
-	{
+	{	
+		display_hang(strikes);
 		printf("Your word: %s\n", guessed);
 		printf("Make a guess: ");
 		scanf("%s", &guess);
 		strikes += !chkguess(guess);
-		display_hang(strikes);
 		if (strikes == 8)
 			break;
 	}
