@@ -25,22 +25,20 @@ void display_hang(int strikes)
 }
 void init(char *in_word)
 {
-	word = (char *)malloc(sizeof(*in_word));
-	guessed = (char *)malloc(sizeof(*in_word));
+	int len = strlen(in_word);
+	word = (char *)malloc(len + 1);
+	guessed = (char *)malloc(len + 1);
+	memset(word, '\0', len + 1);
 	strcpy(word, in_word);
-	int i, max = strlen(word);
-	//it's necessary to store strlen in an int rather than use it directly
-	//in the for loop
-	for (i = 0; i < max; i++){
-		guessed[i] = '_';
-	}
-	guessed[i] = '\0';
+	memset(guessed, '_', len);
+	*(guessed + len) = '\0';
 }
 int main(int argc, char *argv[])
 {
 	init(argv[1]);
 	while (1)
 	{
+		printf("%s\n", word);
 		printf("%s\n", guessed);
 		scanf("%d", &strikes);
 		display_hang(strikes);
