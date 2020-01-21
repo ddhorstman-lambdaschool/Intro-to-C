@@ -15,6 +15,9 @@ char HANG_STATES[7][10 * 9] =
 		"             |         |         |         |         |         |         |         |      ",
 		"/*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   /*****\\   "};
 
+/** Display the correct hangman for the given number of strikes.
+ * @param strikes How many incorrect guesses have been made
+ */
 void display_hang(int strikes)
 {
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -27,28 +30,34 @@ void display_hang(int strikes)
 	}
 }
 
+/** Convert a string to lowercase.
+ * @param str The string to alter.
+ */
 void lower(char *str)
 {
 	for (int i = 0; str[i]; i++)
 		str[i] = tolower(str[i]);
 }
-
+/** Initialize the hangman program.
+ * @param in_word The word to be guessed (from command-line arguments).
+ */
 void init(char *in_word)
 {
 	int len = strlen(in_word);
 	word = (char *)malloc(len + 1);
-	memset(word, '\0', len + 1);
+	//memset(word, '\0', len + 1);
 	strcpy(word, in_word);
+	word[len] = '\0';
 
 	guessed = (char *)malloc(len + 1);
 	memset(guessed, '_', len);
-	*(guessed + len) = '\0';
+	guessed[len] = '\0';
 
-	wrong_guesses = (char *)malloc(26);
+	wrong_guesses = (char *)malloc(26 + 1);
 	memset(wrong_guesses, ' ', 26);
-	*(wrong_guesses + 26) = '\0';
+	wrong_guesses[26] = '\0';
+
 	lower(word);
-	lower(guessed);
 }
 
 int chkguess(char *guess)
@@ -94,7 +103,8 @@ int main(int argc, char *argv[])
 	char guess[50];
 	int guess_status;
 
-	if (!argv[1]){
+	if (!argv[1])
+	{
 		printf("Usage: ./hangman word_to_guess\n");
 		return 1;
 	}
