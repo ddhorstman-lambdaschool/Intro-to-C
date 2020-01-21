@@ -56,6 +56,8 @@ int chkguess(char *guess)
 			correct++;
 			guessed[i] = g;
 		}
+	if(strstr(guessed, word))
+		return -1;
 	return correct;
 }
 void end_game(int outcome)
@@ -67,7 +69,8 @@ void end_game(int outcome)
 	}
 	if (outcome == 1)
 	{
-		printf("You win!\n");
+		display_hang(strikes);
+		printf("You win!\nYour word: %s\n\n", word);
 	}
 	free(word);
 	free(guessed);
