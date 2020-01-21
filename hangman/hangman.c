@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
 		if (strikes == 8)
 			break;
 	}
+	display_hang(strikes);
+	printf("You lose!\nYour word:  %s\nYour guess: %s\n\n", word, guessed);
 	free(word);
 	free(guessed);
 	return 0;
