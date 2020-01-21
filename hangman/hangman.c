@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 int strikes = 0;
 char *word;
 char *guessed;
@@ -24,6 +25,11 @@ void display_hang(int strikes)
 		printf("\n");
 	}
 }
+void lower(char *str)
+{
+	for (int i = 0; str[i]; i++)
+		str[i] = tolower(str[i]);
+}
 void init(char *in_word)
 {
 	int len = strlen(in_word);
@@ -33,36 +39,63 @@ void init(char *in_word)
 	strcpy(word, in_word);
 	memset(guessed, '_', len);
 	*(guessed + len) = '\0';
+	lower(word);
+	lower(guessed);
 }
 int chkguess(char *guess)
 {
+	lower(guess);
+	if (strstr(guess, word))
+		return -1;
+
 	char g = guess[0];
 	int correct = 0;
 	for (int i = 0; i < strlen(word); i++)
 		if (g == word[i])
 		{
-			correct = 1;
+			correct++;
 			guessed[i] = g;
 		}
 	return correct;
+}
+void end_game(int outcome)
+{
+	if (outcome == 0)
+	{
+		display_hang(strikes);
+		printf("You lose!\nYour word:  %s\nYour guess: %s\n\n", word, guessed);
+	}
+	if (outcome == 1)
+	{
+		printf("You win!\n");
+	}
+	free(word);
+	free(guessed);
 }
 int main(int argc, char *argv[])
 {
 	char guess[50];
 	init(argv[1]);
+	int guess_status;
 	while (1)
-	{	
+	{
 		display_hang(strikes);
 		printf("Your word: %s\n", guessed);
 		printf("Make a guess: ");
 		scanf("%s", &guess);
-		strikes += !chkguess(guess);
-		if (strikes == 8)
+		guess_status = chkguess(guess);
+		if (guess_status == -1)
+		{
+			end_game(1);
 			break;
+		}
+		else if (guess_status == 0)
+			strikes++;
+		if (strikes == 8)
+		{
+			end_game(0);
+			break;
+		}
 	}
-	display_hang(strikes);
-	printf("You lose!\nYour word:  %s\nYour guess: %s\n\n", word, guessed);
-	free(word);
-	free(guessed);
 	return 0;
 }
