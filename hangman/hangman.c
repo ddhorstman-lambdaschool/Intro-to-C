@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
 		printf("Your word: %s\n", guessed);
 		scanf("%s", &g);
 		strikes += !chkguess(g);
-		//scanf("%c", &g);
 		display_hang(strikes);
 		if (strikes == 8)
 			break;
