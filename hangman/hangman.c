@@ -76,16 +76,13 @@ int chkguess(char *guess)
 
 void end(int outcome)
 {
+	display_hang(strikes);
+
 	if (outcome == 0)
-	{
-		display_hang(strikes);
 		printf("You lose!\nYour word:  %s\nYour guess: %s\n\n", word, guessed);
-	}
+
 	if (outcome == 1)
-	{
-		display_hang(strikes);
 		printf("You win!\nYour word was %s\n\n", word);
-	}
 
 	free(word);
 	free(guessed);
