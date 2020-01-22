@@ -20,7 +20,7 @@ char HANG_STATES[7][10 * 9] =
  */
 void display_hang(int strikes)
 {
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	//printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	int i, end_idx = (strikes + 1) * 10;
 	for (int j = 0; j < 7; j++)
 	{
@@ -28,6 +28,22 @@ void display_hang(int strikes)
 			printf("%c", HANG_STATES[j][i]);
 		printf("\n");
 	}
+}
+/** Blank out an area of the console
+ * @param lines The number of lines to go up and blank
+ * @param col The number of columns to blank out
+ */
+void blank(int lines, int col){
+
+	for(int i = 0; i < lines; i++){
+		//Go to the start of the previous line
+		printf("\033[F");
+		//Print spaces over what was there before
+		for(int j = 0; j < col; j++)printf(" ");
+	}
+	//Move the cursor back to the start of the current line
+	printf("\r");
+
 }
 
 /** Convert a string to lowercase.
@@ -107,6 +123,7 @@ int chkguess(char *guess)
  */
 void end(int outcome)
 {
+	blank(10,30);
 	display_hang(strikes);
 
 	//Loss
@@ -127,6 +144,8 @@ int main(int argc, char *argv[])
 {
 	char guess[50];
 	int guess_status;
+
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 	//Quit if no word was supplied in the command-line
 	if (!argv[1])
@@ -169,6 +188,7 @@ int main(int argc, char *argv[])
 			end(0);
 			break;
 		}
+		blank(10,30);
 	}
 	return 0;
 }
