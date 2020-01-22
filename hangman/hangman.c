@@ -20,7 +20,6 @@ char HANG_STATES[7][10 * 9] =
  */
 void display_hang(int strikes)
 {
-	//printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	int i, end_idx = (strikes + 1) * 10;
 	for (int j = 0; j < 7; j++)
 	{
@@ -29,6 +28,7 @@ void display_hang(int strikes)
 		printf("\n");
 	}
 }
+
 /** Blank out an area of the console
  * @param lines The number of lines to go up and blank
  * @param col The number of columns to blank out
@@ -145,14 +145,15 @@ int main(int argc, char *argv[])
 	char guess[50];
 	int guess_status;
 
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
 	//Quit if no word was supplied in the command-line
 	if (!argv[1])
 	{
 		printf("Usage: ./hangman word_to_guess\n");
 		return 1;
 	}
+
+	//Blank out the line with the word
+	blank(1,80);
 
 	//Initialize the game
 	init(argv[1]);
@@ -188,7 +189,9 @@ int main(int argc, char *argv[])
 			end(0);
 			break;
 		}
-		blank(10,30);
+
+		//Blank out game board to draw next screen over the current one
+		blank(10,80);
 	}
 	return 0;
 }
