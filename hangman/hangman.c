@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 	}
 
 	//Blank out the line with the word
-	blank(1,80);
+	blank(1,120);
 
 	//Initialize the game
 	init(argv[1]);
