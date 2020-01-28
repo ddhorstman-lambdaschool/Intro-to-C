@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lib.h"
+#include <string.h>
 
 /* 
     Define the Person struct by specifying the fields that make up the
@@ -8,7 +9,10 @@
     Person should have the fields `name`, `age`, `height`, and `weight`.
 */
 typedef struct Person {
-
+    char *name;
+    int age;
+    int height;
+    int weight;
 } Person;
 
 /*
@@ -21,7 +25,13 @@ typedef struct Person {
 */
 Person *createPerson(char *name, int age, int height, int weight)
 {
-
+    Person *pers = malloc(sizeof(Person));
+    pers->name = malloc(strlen(name));
+    strcpy(pers->name,name);
+    pers->age = age;
+    pers->height = height;
+    pers->weight = weight;
+    return pers;
 }
 
 /*
@@ -30,7 +40,9 @@ Person *createPerson(char *name, int age, int height, int weight)
 */
 void destroyPerson(Person *who)
 {
-
+    if(who->name!=NULL)free(who->name);
+    //don't try to free thing which weren't malloc'ed.
+    if(who!=NULL)free(who);
 }
 
 #ifndef TESTING

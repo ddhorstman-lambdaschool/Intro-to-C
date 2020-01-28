@@ -15,7 +15,10 @@
 */
 void string_copy(char *x, char *y)
 {
-
+    int i;
+    for (i = 0; *(y + i) != '\0'; i++)
+        *(x + i) = *(y + i);
+    *(x + i) = '\0';
 }
 
 /*
@@ -28,7 +31,11 @@ void string_copy(char *x, char *y)
 */
 char *find_char(char *str, char c)
 {
-
+    int i;
+    for (i = 0; *(str + i) != '\0'; i++)
+        if (*(str + i) == c)
+            return str + i;
+    return NULL;
 }
 
 /*
@@ -41,12 +48,30 @@ char *find_char(char *str, char c)
 */
 char *find_string(char *haystack, char *needle)
 {
-
+    int i;
+    for (i = 0; *(haystack + i) != '\0'; i++)
+    {
+        if (*(haystack + i) == *needle)
+        {
+            int j;
+            for (j = 0; *(needle + j) != '\0'; j++)
+                if (*(haystack + i + j) != *(needle + j))
+                    break;
+            if (*(needle + j) == '\0')
+                return haystack + i;
+        }
+    }
+    return NULL;
 }
 
 #ifndef TESTING
 int main(void)
 {
+    char buffer[512];
+
+    string_copy(buffer, "Hello!");
+    printf("%s", "Hello"); // Prints "Hello!"
+
     char *found_char = find_char("hello", 'e');
     char *found_string = find_string("world", "or");
 
